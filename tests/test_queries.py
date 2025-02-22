@@ -1,23 +1,6 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-import pytest
-
-from datetime import datetime, timezone
 
 from api.models import Post
-
-
-@pytest.fixture(scope="function")
-def expected_post(session: SQLAlchemy):
-    title = description = "test"
-    post = Post(
-        created_at=datetime.now(timezone.utc),
-        title=title,
-        description=description,
-    )
-    session.add(post)
-    session.flush()
-    yield post
 
 
 def test_getPost(client: Flask, expected_post: Post):

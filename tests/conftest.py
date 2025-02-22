@@ -1,8 +1,12 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import scoped_session, sessionmaker
 import pytest
 
+from datetime import datetime, timezone
+
 from api import create_app, db
+from api.models import Post
 
 
 @pytest.fixture(scope="session")
@@ -39,3 +43,16 @@ def session():
     yield session
     session.rollback()
     session.remove()
+
+
+@pytest.fixture(scope="function")
+def expected_post(session: SQLAlchemy):
+    title = description = "test"
+    post = Post(
+        created_at=datetime.now(timezone.utc),
+        title=title,
+        description=description,
+    )
+    session.add(post)
+    session.flush()
+    yield post

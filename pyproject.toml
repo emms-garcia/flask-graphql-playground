@@ -10,7 +10,6 @@ dependencies = [
     "flask-cors>=5.0.0",
     "flask-sqlalchemy>=3.1.1",
     "pytest>=8.3.4",
-    "pytest-flask-sqlalchemy>=1.1.0",
     "ruff>=0.9.7",
     "sqlalchemy>=2.0.38",
 ]

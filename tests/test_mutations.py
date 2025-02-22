@@ -17,3 +17,12 @@ def test_createPost(client: Flask, session: SQLAlchemy):
         "title": expected_post.title,
         "description": expected_post.description,
     }
+
+
+def test_deletePost(client: Flask, expected_post: Post, session: SQLAlchemy):
+    query = f"mutation {{ deletePost(id: {expected_post.id}) {{ success }} }}"
+    response = client.post("/graphql", json={"query": query})
+    assert response.status_code == 200
+    expected_post = session.get(Post, expected_post.id)
+    assert expected_post is None
+    assert response.json["data"]["deletePost"]["success"]
