@@ -6,7 +6,7 @@ from api.models import Post
 
 def test_createPost(client: Flask, session: SQLAlchemy):
     title = description = "test"
-    query = f"mutation {{ createPost(title: \"{title}\" description: \"{description}\") {{ post {{ id, title, description }} success }} }}"
+    query = f"mutation {{ createPost(title: \"{title}\" description: \"{description}\") {{ post {{ id title description }} success }} }}"
     response = client.post("/graphql", json={"query": query})
     assert response.status_code == 200
     expected_post = session.query(Post).filter(Post.title == title).first()
@@ -21,7 +21,7 @@ def test_createPost(client: Flask, session: SQLAlchemy):
 
 def test_deletePost(client: Flask, expected_post: Post, session: SQLAlchemy):
     # When -> Post not found
-    query = "mutation { deletePost(id: -1) { errors, success } }"
+    query = "mutation { deletePost(id: -1) { errors success } }"
     response = client.post("/graphql", json={"query": query})
     # Then -> Return not found error
     assert response.status_code == 200

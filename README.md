@@ -8,7 +8,7 @@ Playing with:
 ## Set up
 - Install [uv](https://github.com/astral-sh/uv)
 - Run `uv sync` to install all dependencies
-- Run `uv run app.py` to run the API locally
+- Run `uv run flask -e .env run` to run the API locally
 - Check the GraphQL playground at: http://localhost:8080/graphql
 
 ## Example queries / mutations
