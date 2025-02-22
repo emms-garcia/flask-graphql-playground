@@ -1,0 +1,16 @@
+[project]
+name = "flask-graphql-playground"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ariadne>=0.26.1",
+    "flask>=3.1.0",
+    "flask-cors>=5.0.0",
+    "flask-sqlalchemy>=3.1.1",
+    "pytest>=8.3.4",
+    "pytest-flask-sqlalchemy>=1.1.0",
+    "ruff>=0.9.7",
+    "sqlalchemy>=2.0.38",
+]
