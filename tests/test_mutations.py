@@ -20,9 +20,19 @@ def test_createPost(client: Flask, session: SQLAlchemy):
 
 
 def test_deletePost(client: Flask, expected_post: Post, session: SQLAlchemy):
+    # When -> Post not found
+    query = "mutation { deletePost(id: -1) { errors, success } }"
+    response = client.post("/graphql", json={"query": query})
+    # Then -> Return not found error
+    assert response.status_code == 200
+    assert not response.json["data"]["deletePost"]["success"]
+    assert response.json["data"]["deletePost"]["errors"] == ["Post with id -1 not found"]
+
+    # When -> Post found
     query = f"mutation {{ deletePost(id: {expected_post.id}) {{ success }} }}"
     response = client.post("/graphql", json={"query": query})
+    # Then -> Return 200 and assert Post was deleted
     assert response.status_code == 200
+    assert response.json["data"]["deletePost"]["success"]
     expected_post = session.get(Post, expected_post.id)
     assert expected_post is None
-    assert response.json["data"]["deletePost"]["success"]

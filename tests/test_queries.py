@@ -4,8 +4,19 @@ from api.models import Post
 
 
 def test_getPost(client: Flask, expected_post: Post):
+    # When -> Post not found
+    query = "query { getPost(id: -1) { success, errors } }"
+    response = client.post("/graphql", json={"query": query})
+    # Then -> Return not found error
+    assert response.status_code == 200
+    assert not response.json["data"]["getPost"]["success"]
+    print(response.json)
+    assert response.json["data"]["getPost"]["errors"] == ["Post with id -1 not found"]
+
+    # When -> Post found
     query = f"query {{ getPost(id: {expected_post.id}) {{ post {{ id, title, description }} success }} }}"
     response = client.post("/graphql", json={"query": query})
+    # When -> Return expected Post
     assert response.status_code == 200
     assert response.json["data"]["getPost"]["success"]
     assert response.json["data"]["getPost"]["post"] == {
