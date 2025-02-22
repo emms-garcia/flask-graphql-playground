@@ -18,8 +18,8 @@ Playing with:
 ```graphql
 mutation CreatePost {
   createPost(
-    title:"My first post"
-    description:"This is my first post's description"
+    title: "My first post"
+    description: "This is my first post's description"
   ) {
     post {
       title
@@ -80,5 +80,5 @@ mutation {
 }
 ```
 
-## Testing
+## Testing
 Run: `uv run pytest -s` to run all tests
