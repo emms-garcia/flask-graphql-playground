@@ -10,7 +10,6 @@ def test_getPost(client: Flask, expected_post: Post):
     # Then -> Return not found error
     assert response.status_code == 200
     assert not response.json["data"]["getPost"]["success"]
-    print(response.json)
     assert response.json["data"]["getPost"]["errors"] == ["Post with id -1 not found"]
 
     # When -> Post found
